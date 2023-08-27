@@ -16,7 +16,8 @@ const TaskList = () => {
 
 const Task = ({ task }) => {
     const [isEditing, setIsEditing] = useState(false);
-    const dispatch = useContext(TasksDispatchContext);
+    const { handleChangeTask, handleRemoveTask } = useContext(TasksDispatchContext)
+    // const dispatch = useContext(TasksDispatchContext);
     let taskContent;
     if (isEditing) {
         taskContent = (
@@ -25,13 +26,9 @@ const Task = ({ task }) => {
                     type="text"
                     value={task.text}
                     onChange={e => {
-                        dispatch({
-                            type: 'changed',
-                            task: {
-                                ...task,
-                                text: e.target.value
-                            }
-                        });
+                        const nTask = { ...task,
+                            text: e.target.value};
+                        handleChangeTask(nTask.id,nTask.text,nTask.done);
                     }} />
                 <button onClick={() => setIsEditing(false)}>
                     Save
@@ -54,21 +51,14 @@ const Task = ({ task }) => {
                 type="checkbox"
                 checked={task.done}
                 onChange={e => {
-                    dispatch({
-                        type: 'changed',
-                        task: {
-                            ...task,
-                            done: e.target.checked
-                        }
-                    });
+                    const nTask = { ...task,
+                        done: e.target.checked};
+                    handleChangeTask(nTask.id,nTask.text,nTask.done);
                 }}
             />
             {taskContent}
             <button onClick={() => {
-                dispatch({
-                    type: 'deleted',
-                    id: task.id
-                });
+                handleRemoveTask(task.id);
             }}>
                 Delete
             </button>
