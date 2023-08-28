@@ -9,7 +9,6 @@ import {Suspense} from "react";
 const TaskApp = () => {
     return (
         <StorableProvider>
-            <Suspense fallback={<div>loading...</div>}>
             <TasksProvider>
                 <header>
 
@@ -21,7 +20,6 @@ const TaskApp = () => {
                     <TaskList />
                 </main>
             </TasksProvider>
-            </Suspense>
         </StorableProvider>
     );
 }

@@ -1,8 +1,15 @@
 import { useState, useContext } from 'react';
-import { TasksContext, TasksDispatchContext } from './TasksContext.jsx';
+import { TasksDispatchContext } from './TasksContext.jsx';
+import { StorableContext } from "./indexeDB.jsx";
+import { useLiveQuery } from "dexie-react-hooks/src";
 
 const TaskList = () => {
-    const tasks = useContext(TasksContext);
+
+    const db = useContext(StorableContext);
+    const tasks = useLiveQuery( () => db.tasks.toArray());
+
+    if ( ! tasks ) return null;
+
     return (
         <ul>
             {tasks.map(task => (

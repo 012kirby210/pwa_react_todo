@@ -3,9 +3,9 @@ import Dexie from "dexie";
 
 const StorableContext = createContext(null);
 
+const db = new Dexie('MyTodoDatabase');
 const StorableProvider = ({children}) => {
 
-    const db = new Dexie('MyTodoDatabase');
 
     db.version(1).stores({
         tasks: '++id,text,done'
@@ -18,4 +18,4 @@ const StorableProvider = ({children}) => {
     )
 }
 
-export { StorableProvider, StorableContext };
+export { StorableProvider, StorableContext, db };
